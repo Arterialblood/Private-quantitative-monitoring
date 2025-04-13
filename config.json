@@ -1,0 +1,44 @@
+{
+    "api_settings": {
+        "tushare_token": "d2c5df3dfe8ad080573b92e7f29617f4d295edfe509688a2084cdab4"
+    },
+    "serverchan_settings": {
+        "sckey": "SCT276206TR1vohLjSWKkTm4uP0OkDUMbG"
+    },
+    "wechat_settings": {
+        "corp_id": "wwc5b020a8c4239f09",
+        "corp_secret": "DIhaKXQ2I8bDchDyDBM7KZ-Cjv8-aKYvSl0BG2aSyiA",
+        "agent_id": 1000002
+    },
+    "monitoring": {
+        "check_interval": 60,
+        "days_back": 30,
+        "watchlist": [
+            {
+                "code": "399300",
+                "name": "沪深300",
+                "type": "index"
+            },
+            {
+                "code": "000001",
+                "name": "上证指数",
+                "type": "index"
+            },
+            {
+                "code": "002946",
+                "name": "新乳业",
+                "type": "stock"
+            },
+            {
+                "code": "601155",
+                "name": "新城控股",
+                "type": "stock"
+            },
+            {
+                "code": "002276",
+                "name": "万马股份",
+                "type": "stock"
+            }
+        ]
+    }
+}
