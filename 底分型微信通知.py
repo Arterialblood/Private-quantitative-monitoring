@@ -1675,8 +1675,8 @@ def manage_settings():
         else:
             print("无效选择，请重新输入")
 
-def setup_and_run():
-    """设置程序并运行"""
+def display_welcome():
+    """显示欢迎信息"""
     # 确保配置文件存在
     ConfigManager.load_config()
     
@@ -1685,38 +1685,62 @@ def setup_and_run():
     
     # 打印欢迎信息
     print("""
-    =====================================================
-       底分型策略微信通知系统 v1.1
-       
-       本程序监控股票/指数，在发现底分型买入信号或顶分型
-       卖出信号时通过方糖Server酱发送通知，帮助交易者把握交易时机
-    =====================================================
-    """)
+=====================================================
+   底分型策略微信通知系统 v1.1
+   
+   本程序监控股票/指数，在发现底分型买入信号或顶分型
+   卖出信号时通过方糖Server酱发送通知，帮助交易者把握交易时机
+=====================================================
+""")
+
+def display_menu():
+    """显示主菜单"""
+    print("\n==== 主菜单 ====")
+    print("1. 启动自选股监控")
+    print("2. 管理自选股监控列表")
+    print("3. 系统设置")
+    print("4. 退出程序")
+
+def setup_and_run():
+    """设置并运行程序"""
+    display_welcome()
     
+    # 检测是否在服务模式下运行（无法接收用户输入的环境）
+    import os
+    # 如果存在环境变量或特殊文件，表示是服务模式
+    is_service_mode = os.environ.get('RUN_AS_SERVICE') == '1' or os.path.exists('/run/systemd/system')
+    
+    if is_service_mode:
+        logger.info("检测到以服务模式运行，自动启动监控...")
+        # 自动选择选项1：启动自选股监控
+        run_multi_monitor()  # 使用原函数名
+        return
+    
+    # 交互式菜单模式
     while True:
-        print("\n==== 主菜单 ====")
-        print("1. 启动自选股监控")
-        print("2. 管理自选股监控列表")
-        print("3. 系统设置")
-        print("4. 退出程序")
-        
-        choice = input("\n请选择操作 (1-4): ")
-        
-        if choice == '1':
-            run_multi_monitor()
-        
-        elif choice == '2':
-            manage_watchlist()
-        
-        elif choice == '3':
-            manage_settings()
-        
-        elif choice == '4':
-            print("程序已退出")
+        display_menu()
+        try:
+            choice = input("\n请选择操作 (1-4): ")
+            
+            if choice == '1':
+                run_multi_monitor()  # 使用原函数名
+            elif choice == '2':
+                manage_watchlist()
+            elif choice == '3':
+                manage_settings()  # 使用原函数名
+            elif choice == '4':
+                logger.info("程序已退出")
+                print("谢谢使用，再见！")
+                break
+            else:
+                print("无效的选择，请重试。")
+        except (KeyboardInterrupt, EOFError):
+            logger.info("程序被用户中断")
+            print("\n程序已被中断，退出...")
             break
-        
-        else:
-            print("无效选择，请重新输入")
+        except Exception as e:
+            logger.error(f"发生未知错误: {str(e)}")
+            print(f"发生错误: {str(e)}")
 
 
 if __name__ == "__main__":
