@@ -1,0 +1,29 @@
+{
+    "api_settings": {
+        "tushare_token": "YOUR_TUSHARE_TOKEN"
+    },
+    "serverchan_settings": {
+        "sckey": "YOUR_SCKEY"
+    },
+    "wechat_settings": {
+        "corp_id": "YOUR_CORP_ID",
+        "corp_secret": "YOUR_CORP_SECRET",
+        "agent_id": 1000002
+    },
+    "monitoring": {
+        "check_interval": 60,
+        "days_back": 30,
+        "watchlist": [
+            {
+                "code": "399300",
+                "name": "沪深300",
+                "type": "index"
+            },
+            {
+                "code": "000001",
+                "name": "上证指数",
+                "type": "index"
+            }
+        ]
+    }
+}
